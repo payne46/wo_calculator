@@ -8,6 +8,12 @@ namespace wo_calculator.Tests
     public class InitTests
     {
         [TestMethod]
+        public void TestCalculatorInit()
+        {
+            var calculator = new Calculator();
+        }
+
+        [TestMethod]
         public void TestCalculatorValueInit()
         {
             var calculator = new Calculator();
@@ -30,6 +36,17 @@ namespace wo_calculator.Tests
             var calculator = new Calculator();
 
             Assert.AreEqual(WordType.QWORD, calculator.WordType);
+        }
+
+        [TestMethod]
+        public void TestCalculatorBinaryValue()
+        {
+            var calculator = new Calculator();
+
+            for (int i = 0; i < 64; i++)
+            {
+                Assert.AreEqual(calculator.BinaryValue[i], 0);
+            }
         }
 
     }

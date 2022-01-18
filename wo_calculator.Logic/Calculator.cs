@@ -7,6 +7,7 @@ namespace wo_calculator.Logic
     public class Calculator
     {
         private int activeValue;
+        private string inputValue;
 
         public Calculator()
         {
@@ -14,42 +15,82 @@ namespace wo_calculator.Logic
             this.ActiveValue = "0";
             this.SystemType = SystemType.Dec;
             this.WordType = WordType.QWORD;
+
+            this.BinaryValue = new int[64];
+            for (int i = 0; i < 64; i++)
+            {
+                this.BinaryValue[i] = 0;
+            }
         }
-        
-        public string InputValue { get; set; }
+
+        public string InputValue
+        {
+            get { return this.inputValue; }
+            set
+            {
+                this.inputValue = this.Parse(value);
+            }
+        }
+
+        private string Parse(string value)
+        {
+            return string.Empty;
+        }
+
+        public int[] BinaryValue { get; set; }
+
+        private string GetActiveValue(int activeValue, SystemType type) 
+        {
+            if (type == SystemType.Dec)
+            {
+                return activeValue.ToString();
+            }
+
+            if (type == SystemType.Hex)
+            {
+                return activeValue.ToString("X");
+            }
+
+            if (type == SystemType.Bin)
+            {
+                // todo
+            }
+
+            return Convert.ToInt64(activeValue.ToString(), 8).ToString();
+        }
+
+        private int ConvertToActiveValue(string activeValue, SystemType type)
+        {
+            this.BinaryValue = this.BitActiveValue(activeValue, type);
+
+            if (type == SystemType.Dec)
+            {
+                return int.Parse(activeValue);
+            }
+
+            if (type == SystemType.Hex)
+            {
+                // todo
+            }
+
+            if (type == SystemType.Bin)
+            {
+                // todo
+            }
+
+            // todo OCT
+            return -1;
+        }
         
         public string ActiveValue
         {
             get
             {
-                if (this.SystemType == SystemType.Dec)
-                {
-                    return activeValue.ToString();
-                }
-
-                if (this.SystemType == SystemType.Hex)
-                {
-                    return activeValue.ToString("X");
-                }
-
-                if (this.SystemType == SystemType.Bin)
-                {
-
-                }
-                if (this.SystemType == SystemType.Oct)
-                {
-                    var temp = Convert.ToInt64(activeValue.ToString(), 8);
-                    return temp.ToString();
-                }
+                return this.GetActiveValue(this.activeValue, this.SystemType);
             }
             set
             {
-                if (this.SystemType == SystemType.Dec)
-                {
-                    this.activeValue = int.Parse(value);
-                }
-
-                Convert.ToInt64(value, )
+                this.activeValue = this.ConvertToActiveValue(value, this.SystemType);
             }
         }
 
