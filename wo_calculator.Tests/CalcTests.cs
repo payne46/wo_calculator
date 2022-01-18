@@ -32,9 +32,9 @@ namespace wo_calculator.Tests
             Assert.AreEqual(-50, calculator.Subtract(33, 83)); 
             Assert.AreEqual(-4, calculator.Subtract(0, 4));
             
-            Assert.AreEqual(13, calculator.Subtract(50, 27));
+            Assert.AreEqual(13, calculator.Subtract(50, 37));
             Assert.AreEqual(23, calculator.Subtract(30, 7));
-            Assert.AreEqual(33, calculator.Add(50, 17));
+            Assert.AreEqual(33, calculator.Subtract(50, 17));
 
             Assert.AreEqual(0, calculator.Subtract(0, 0));
         }
@@ -99,7 +99,7 @@ namespace wo_calculator.Tests
         {
             var calculator = new Calculator();
 
-            Assert.AreEqual("10", calculator.RightShift(0b_1001, 4));
+            Assert.AreEqual("10", calculator.RightShift(0b_1001, 2));
         }
 
         [TestMethod]
@@ -123,7 +123,7 @@ namespace wo_calculator.Tests
         {
             var calculator = new Calculator();
 
-            Assert.AreEqual("11100100", calculator.OrOperator(0b_1111_1000, 0b_0001_1100));
+            Assert.AreEqual("11100100", calculator.OrExOperator(0b_1111_1000, 0b_0001_1100));
         }
 
     }

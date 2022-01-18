@@ -19,7 +19,7 @@ namespace wo_calculator.Tests
             var calculator = new Calculator();
             
             Assert.AreEqual("0", calculator.InputValue);
-            Assert.AreEqual(0, calculator.ActiveValue);
+            Assert.AreEqual("0", calculator.ActiveValue);
         }
         
         [TestMethod]

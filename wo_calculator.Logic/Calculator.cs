@@ -13,8 +13,6 @@ namespace wo_calculator.Logic
 
         public Calculator()
         {
-            this.InputValue = "0";
-            this.ActiveValue = "0";
             this.SystemType = SystemType.Dec;
             this.WordType = WordType.QWORD;
 
@@ -23,6 +21,9 @@ namespace wo_calculator.Logic
             {
                 this.BinaryValue[i] = 0;
             }
+
+            this.InputValue = "0";
+            this.ActiveValue = "0";
         }
 
         public string InputValue
@@ -30,14 +31,10 @@ namespace wo_calculator.Logic
             get { return this.inputValue; }
             set
             {
-                this.inputValue = this.Parse(value);
+                this.inputValue = this.GetValue(value, this.SystemType);
             }
         }
-
-        private string Parse(string value)
-        {
-            return string.Empty;
-        }
+        
 
         public int[] BinaryValue { get; set; }
 
@@ -57,6 +54,20 @@ namespace wo_calculator.Logic
 
         public WordType WordType { get; set; }
 
+
+        public string GetValue(string value, SystemType type)
+        {
+            if (type == SystemType.Bin)
+                return this.GetBinaryValue(value);
+
+            if (type == SystemType.Dec)
+                return this.GetDecValue(value);
+
+            if (type == SystemType.Hex)
+                return this.GetHexValue(value);
+
+            return this.GetOctValue(value);
+        }
 
         public string GetBinaryValue(string value)
         {
