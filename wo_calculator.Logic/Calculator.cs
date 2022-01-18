@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Linq;
+using System.Text;
 using wo_calculator.Logic.Enums;
+using wo_calculator.Logic.Helpers;
 
 namespace wo_calculator.Logic
 {
@@ -39,49 +41,6 @@ namespace wo_calculator.Logic
 
         public int[] BinaryValue { get; set; }
 
-        private string GetActiveValue(int activeValue, SystemType type) 
-        {
-            if (type == SystemType.Dec)
-            {
-                return activeValue.ToString();
-            }
-
-            if (type == SystemType.Hex)
-            {
-                return activeValue.ToString("X");
-            }
-
-            if (type == SystemType.Bin)
-            {
-                // todo
-            }
-
-            return Convert.ToInt64(activeValue.ToString(), 8).ToString();
-        }
-
-        private int ConvertToActiveValue(string activeValue, SystemType type)
-        {
-            this.BinaryValue = this.BitActiveValue(activeValue, type);
-
-            if (type == SystemType.Dec)
-            {
-                return int.Parse(activeValue);
-            }
-
-            if (type == SystemType.Hex)
-            {
-                // todo
-            }
-
-            if (type == SystemType.Bin)
-            {
-                // todo
-            }
-
-            // todo OCT
-            return -1;
-        }
-        
         public string ActiveValue
         {
             get
@@ -98,6 +57,87 @@ namespace wo_calculator.Logic
 
         public WordType WordType { get; set; }
 
+
+        public string GetBinaryValue(string value)
+        {
+            return this.GetParsedValue(value, AssignableValues.BinaryValues);
+        }
+
+        public string GetOctValue(string value)
+        {
+            return this.GetParsedValue(value, AssignableValues.OctValues);
+        }
+
+        public string GetDecValue(string value)
+        {
+            return this.GetParsedValue(value, AssignableValues.DecValues);
+        }
+
+        public string GetHexValue(string value)
+        {
+            return this.GetParsedValue(value, AssignableValues.HexValues);
+        }
+
+        public string GetParsedValue(string value, char[] availableChars)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var v in value)
+            {
+                if (availableChars.Contains(v) || AssignableValues.CommonChars.Contains(v))
+                {
+                    sb.Append(v);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+
+
+        private string GetActiveValue(int value, SystemType type) 
+        {
+            if (type == SystemType.Dec)
+            {
+                return value.ToString();
+            }
+
+            if (type == SystemType.Hex)
+            {
+                return value.ToString("X");
+            }
+
+            if (type == SystemType.Bin)
+            {
+                // todo
+            }
+
+            return Convert.ToInt64(value.ToString(), 8).ToString();
+        }
+        
+        private int ConvertToActiveValue(string value, SystemType type)
+        {
+            this.BinaryValue = this.BitActiveValue(value, type);
+
+            if (type == SystemType.Dec)
+            {
+                return int.Parse(value);
+            }
+
+            if (type == SystemType.Hex)
+            {
+                // todo
+            }
+
+            if (type == SystemType.Bin)
+            {
+                // todo
+            }
+
+            // todo OCT
+            return -1;
+        }
+        
         public int[] BitActiveValue(string value, SystemType systemType = SystemType.Dec)
         {
             if (systemType == SystemType.Bin)
@@ -138,6 +178,7 @@ namespace wo_calculator.Logic
 
             return binaryNum;
         }
+
 
         public double Add(double x, double y)
         {
