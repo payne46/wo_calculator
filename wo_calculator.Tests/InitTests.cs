@@ -11,6 +11,8 @@ namespace wo_calculator.Tests
         public void TestCalculatorInit()
         {
             var calculator = new Calculator();
+
+            Assert.IsNotNull(calculator);
         }
 
         [TestMethod]
@@ -19,7 +21,6 @@ namespace wo_calculator.Tests
             var calculator = new Calculator();
             
             Assert.AreEqual("0", calculator.InputValue);
-            Assert.AreEqual("0", calculator.ActiveValue);
         }
         
         [TestMethod]
@@ -42,10 +43,12 @@ namespace wo_calculator.Tests
         public void TestCalculatorBinaryValue()
         {
             var calculator = new Calculator();
+            
+            Assert.AreEqual(calculator.BinaryValue.Length, 64);
 
-            for (int i = 0; i < 64; i++)
+            foreach (var c in calculator.BinaryValue)
             {
-                Assert.AreEqual(calculator.BinaryValue[i], 0);
+                Assert.AreEqual('0', c);
             }
         }
 

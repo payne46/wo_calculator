@@ -1,29 +1,23 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
+using wo_calculator.Logic.Converters;
 using wo_calculator.Logic.Enums;
-using wo_calculator.Logic.Helpers;
 
 namespace wo_calculator.Logic
 {
     public class Calculator
     {
-        private int activeValue;
         private string inputValue;
+
+        public ValueConverter Converter { get; set; }
 
         public Calculator()
         {
+            this.Converter = new ValueConverter();
+
             this.SystemType = SystemType.Dec;
             this.WordType = WordType.QWORD;
 
-            this.BinaryValue = new int[64];
-            for (int i = 0; i < 64; i++)
-            {
-                this.BinaryValue[i] = 0;
-            }
-
             this.InputValue = "0";
-            this.ActiveValue = "0";
         }
 
         public string InputValue
@@ -31,105 +25,21 @@ namespace wo_calculator.Logic
             get { return this.inputValue; }
             set
             {
-                this.inputValue = this.GetValue(value, this.SystemType);
+                this.inputValue = this.Converter.GetValue(value, this.SystemType);
             }
         }
         
-
-        public int[] BinaryValue { get; set; }
-
-        public string ActiveValue
+        public string BinaryValue
         {
-            get
-            {
-                return this.GetActiveValue(this.activeValue, this.SystemType);
-            }
-            set
-            {
-                this.activeValue = this.ConvertToActiveValue(value, this.SystemType);
-            }
+            get { return this.Converter.Get64BinaryValue(this.InputValue); }
         }
 
         public SystemType SystemType { get; set; }
 
         public WordType WordType { get; set; }
-
-
-        public string GetValue(string value, SystemType type)
-        {
-            if (type == SystemType.Bin)
-                return this.GetBinaryValue(value);
-
-            if (type == SystemType.Dec)
-                return this.GetDecValue(value);
-
-            if (type == SystemType.Hex)
-                return this.GetHexValue(value);
-
-            return this.GetOctValue(value);
-        }
-
-        public string GetBinaryValue(string value)
-        {
-            return this.GetParsedValue(value, AssignableValues.BinaryValues);
-        }
-
-        public string GetOctValue(string value)
-        {
-            return this.GetParsedValue(value, AssignableValues.OctValues);
-        }
-
-        public string GetDecValue(string value)
-        {
-            return this.GetParsedValue(value, AssignableValues.DecValues);
-        }
-
-        public string GetHexValue(string value)
-        {
-            return this.GetParsedValue(value, AssignableValues.HexValues);
-        }
-
-        public string GetParsedValue(string value, char[] availableChars)
-        {
-            var sb = new StringBuilder();
-
-            foreach (var v in value)
-            {
-                if (availableChars.Contains(v) || AssignableValues.CommonChars.Contains(v))
-                {
-                    sb.Append(v);
-                }
-            }
-
-            return sb.ToString();
-        }
-
-
-
-        private string GetActiveValue(int value, SystemType type) 
-        {
-            if (type == SystemType.Dec)
-            {
-                return value.ToString();
-            }
-
-            if (type == SystemType.Hex)
-            {
-                return value.ToString("X");
-            }
-
-            if (type == SystemType.Bin)
-            {
-                // todo
-            }
-
-            return Convert.ToInt64(value.ToString(), 8).ToString();
-        }
         
         private int ConvertToActiveValue(string value, SystemType type)
         {
-            this.BinaryValue = this.BitActiveValue(value, type);
-
             if (type == SystemType.Dec)
             {
                 return int.Parse(value);
@@ -167,6 +77,11 @@ namespace wo_calculator.Logic
                 }
 
                 return bit;
+            }
+
+            if (systemType == SystemType.Dec)
+            {
+                // todo
             }
 
             return null;
@@ -260,8 +175,5 @@ namespace wo_calculator.Logic
         {
             return x == y;
         }
-
-
-
     }
 }

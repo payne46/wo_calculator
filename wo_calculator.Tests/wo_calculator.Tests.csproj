@@ -51,7 +51,9 @@
   <ItemGroup>
     <Compile Include="CalcTests.cs" />
     <Compile Include="InitTests.cs" />
+    <Compile Include="InputTestsOct.cs" />
     <Compile Include="InputTestsBinary.cs" />
+    <Compile Include="InputTestsDec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

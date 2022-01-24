@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Enums\SystemType.cs" />
     <Compile Include="Enums\WordType.cs" />
     <Compile Include="Helpers\AssignableValues.cs" />
