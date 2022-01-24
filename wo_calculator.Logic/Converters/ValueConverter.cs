@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using wo_calculator.Logic.Enums;
 using wo_calculator.Logic.Helpers;
 
@@ -11,6 +12,9 @@ namespace wo_calculator.Logic.Converters
     {
         public string GetBinaryValue(string value, SystemType type, WordType w_len)
         {
+            if (string.IsNullOrEmpty(value))
+                return "0";
+            
             return w_len == WordType.QWORD
                 ? Convert.ToString(Convert.ToInt64(value, (int)type), 2)
                 : Convert.ToString(Convert.ToInt32(value, (int)type), 2); // 123D+231
@@ -20,14 +24,16 @@ namespace wo_calculator.Logic.Converters
         public string FromInput(string value, SystemType type, WordType w_len)
         {
             var parsedValue = this.GetParsedValue(value, type);
-
-            var binaryValue = this.GetBinaryValue(parsedValue, type, w_len);
+            
+            var binaryValue = type != SystemType.Bin
+                ? this.GetBinaryValue(parsedValue, type, w_len) 
+                : parsedValue;
+            
+            binaryValue = this.ChangeBinaryLength(binaryValue, w_len);
 
             if (type == SystemType.Bin)
                 return binaryValue.TrimStart(new char[] { '0' });
-
-            binaryValue = this.ChangeBinaryLength(binaryValue, w_len);
-
+            
             var converted = Convert.ToInt32(binaryValue, 2);
 
             switch (type)
@@ -54,10 +60,10 @@ namespace wo_calculator.Logic.Converters
 
             var binaryValue = this.GetBinaryValue(parsedValueOld, oldType, w_len);
             
+            binaryValue = this.ChangeBinaryLength(binaryValue, w_len);
+
             if (newType == SystemType.Bin)
                 return binaryValue.TrimStart(new char[] { '0' });
-
-            binaryValue = this.ChangeBinaryLength(binaryValue, w_len);
 
             var converted = Convert.ToInt32(binaryValue, 2);
 
@@ -82,14 +88,9 @@ namespace wo_calculator.Logic.Converters
 
             if (binaryValue.Length > targetLength)
             {
-                return binaryValue.Substring(binaryValue.Length - targetLength, targetLength);
+                return binaryValue.Substring(binaryValue.Length - targetLength);
             }
-
-            if (binaryValue.Length < targetLength)
-            {
-                return new string('0', targetLength - binaryValue.Length) + binaryValue;
-            }
-
+            
             return binaryValue;
         }
         

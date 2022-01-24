@@ -57,6 +57,7 @@
     <Compile Include="InputTestsBinary.cs" />
     <Compile Include="InputTestsDec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrimTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

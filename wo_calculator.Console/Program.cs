@@ -10,14 +10,19 @@ namespace wo_calculator.Console
         {
             var calculator = new Calculator()
             {
-                SystemType = SystemType.Oct
+                SystemType = SystemType.Bin
             };
 
-            calculator.InputValue = "4559";
+            calculator.InputValue = "111101101011011101011010101100101011110001000111000111000111";
 
-            calculator.SystemType = SystemType.Hex;
+            calculator.WordType = WordType.DWORD;
+            var result = string.Equals("00101011110001000111000111000111", calculator.InputValue);
 
-            var value = calculator.InputValue;
+            calculator.WordType = WordType.WORD;
+            result = string.Equals("0111000111000111", calculator.InputValue);
+
+            calculator.WordType = WordType.BYTE;
+            result = string.Equals("11000111", calculator.InputValue);
         }
     }
 }

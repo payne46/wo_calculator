@@ -41,18 +41,6 @@ namespace wo_calculator.Tests
             
             Assert.AreEqual("35", calculator.InputValue);
         }
-
-        [TestMethod]
-        public void TrimTest2()
-        {
-            var calculator = new Calculator();
-
-            calculator.SystemType = SystemType.Dec;
-            calculator.InputValue = "128";
-
-            calculator.WordType = WordType.BYTE;
-
-            Assert.AreEqual("-127", calculator.InputValue);
-        }
+        
     }
 }
