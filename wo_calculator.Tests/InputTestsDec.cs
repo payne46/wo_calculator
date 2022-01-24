@@ -30,7 +30,7 @@ namespace wo_calculator.Tests
 
             calculator.InputValue = "0s93g+2s45cl";
 
-            Assert.AreEqual("093+245", calculator.InputValue);
+            Assert.AreEqual("93245", calculator.InputValue);
         }
 
         [TestMethod]
@@ -40,7 +40,7 @@ namespace wo_calculator.Tests
 
             calculator.InputValue = "0s93g2s45-cl";
 
-            Assert.AreEqual("093245-", calculator.InputValue);
+            Assert.AreEqual("93245", calculator.InputValue);
         }
     }
 }

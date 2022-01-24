@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using wo_calculator.Logic;
-using wo_calculator.Logic.Enums;
 
 namespace wo_calculator.Tests
 {

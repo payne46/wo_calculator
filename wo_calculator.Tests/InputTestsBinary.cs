@@ -32,7 +32,7 @@ namespace wo_calculator.Tests
 
             calculator.InputValue = "0g01h3s";
 
-            Assert.AreEqual("001", calculator.InputValue);
+            Assert.AreEqual("1", calculator.InputValue);
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace wo_calculator.Tests
 
             calculator.InputValue = "+0g01h3s";
 
-            Assert.AreEqual("+001", calculator.InputValue);
+            Assert.AreEqual("1", calculator.InputValue);
         }
         
         [TestMethod]
@@ -58,7 +58,7 @@ namespace wo_calculator.Tests
 
             calculator.InputValue = "-0g01h3s";
 
-            Assert.AreEqual("-001", calculator.InputValue);
+            Assert.AreEqual("1", calculator.InputValue);
         }
     }
 }

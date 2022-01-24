@@ -7,36 +7,55 @@ namespace wo_calculator.Logic
     public class Calculator
     {
         private string inputValue;
-
-        public ValueConverter Converter { get; set; }
-
+        private SystemType systemType;
+        private WordType wordType;
+        
         public Calculator()
         {
-            this.Converter = new ValueConverter();
+            this.ValueConverter = new ValueConverter();
 
-            this.SystemType = SystemType.Dec;
-            this.WordType = WordType.QWORD;
-
-            this.InputValue = "0";
+            this.systemType = SystemType.Dec;
+            this.wordType = WordType.QWORD;
+            this.inputValue = "0";
         }
+
+        public ValueConverter ValueConverter { get; }
+
+
 
         public string InputValue
         {
             get { return this.inputValue; }
             set
             {
-                this.inputValue = this.Converter.Shorten(this.Converter.GetValue(value, this.SystemType), this.SystemType, this.WordType);
+                this.inputValue = this.ValueConverter.FromInput(value, this.SystemType, this.WordType);
             }
         }
         
         public string BinaryValue
         {
-            get { return this.Converter.Get64BinaryValue(this.InputValue); }
+            get { return this.ValueConverter.Get64BinaryValue(this.InputValue); }
         }
 
-        public SystemType SystemType { get; set; }
+        public SystemType SystemType
+        {
+            get { return this.systemType; }
+            set
+            {
+                this.inputValue = this.ValueConverter.FromChange(this.inputValue, this.SystemType, value, this.WordType);
+                this.systemType = value;
+            }
+        }
 
-        public WordType WordType { get; set; }
+        public WordType WordType
+        {
+            get { return this.wordType; }
+            set
+            {
+                this.inputValue = this.ValueConverter.FromChange(this.inputValue, this.SystemType, this.SystemType, value);
+                this.wordType = value;
+            }
+        }
         
         private int ConvertToActiveValue(string value, SystemType type)
         {
