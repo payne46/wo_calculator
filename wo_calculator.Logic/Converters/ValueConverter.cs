@@ -24,24 +24,17 @@ namespace wo_calculator.Logic.Converters
             return this.GetOctValue(value);
         }
         
-        public string GetActiveValue(int value, SystemType type)
+        public string Shorten(string value, SystemType type, WordType w_len)
         {
-            if (type == SystemType.Dec)
+            for (int i = 1; i<value.Length; i++)
             {
-                return value.ToString();
+                string sub = value.Substring(0, i);
+                int v = Convert.ToInt32(value, (int)type);
+                if (this.GetBinaryValue(Convert.ToString(v)).Length > (int)w_len) {
+                    return sub.Substring(0, sub.Length - 1);
+                }
             }
-
-            if (type == SystemType.Hex)
-            {
-                return value.ToString("X");
-            }
-
-            if (type == SystemType.Bin)
-            {
-                // todo
-            }
-
-            return Convert.ToInt64(value.ToString(), 8).ToString();
+            return value;
         }
         
         public string GetBinaryValue(string value)

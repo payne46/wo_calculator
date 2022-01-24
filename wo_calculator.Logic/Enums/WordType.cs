@@ -2,9 +2,9 @@
 {
     public enum WordType
     {
-        BYTE,
-        WORD,
-        DWORD,
-        QWORD,
+        BYTE = 8,
+        WORD = 16,
+        DWORD = 32,
+        QWORD = 64,
     }
 }

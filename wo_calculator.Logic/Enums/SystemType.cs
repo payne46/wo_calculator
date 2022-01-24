@@ -2,9 +2,9 @@
 {
     public enum SystemType
     {
-        Bin = 'B',
-        Oct = 'O',
-        Dec = 'D',
-        Hex = 'X',
+        Bin = 2,
+        Oct = 8,
+        Dec = 10,
+        Hex = 16,
     }
 }

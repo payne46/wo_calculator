@@ -25,7 +25,7 @@ namespace wo_calculator.Logic
             get { return this.inputValue; }
             set
             {
-                this.inputValue = this.Converter.GetValue(value, this.SystemType);
+                this.inputValue = this.Converter.Shorten(this.Converter.GetValue(value, this.SystemType), this.SystemType, this.WordType);
             }
         }
         
