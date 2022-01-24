@@ -51,10 +51,12 @@
   <ItemGroup>
     <Compile Include="CalcTests.cs" />
     <Compile Include="InitTests.cs" />
+    <Compile Include="InputTestsHex.cs" />
     <Compile Include="InputTestsOct.cs" />
     <Compile Include="InputTestsBinary.cs" />
     <Compile Include="InputTestsDec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordTypeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
