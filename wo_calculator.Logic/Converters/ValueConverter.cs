@@ -14,12 +14,10 @@ namespace wo_calculator.Logic.Converters
         {
             if (string.IsNullOrEmpty(value))
                 return "0";
-            
-            return w_len == WordType.QWORD
-                ? Convert.ToString(Convert.ToInt64(value, (int)type), 2)
-                : Convert.ToString(Convert.ToInt32(value, (int)type), 2); // 123D+231
+            return Convert.ToString(Convert.ToInt64(value, (int)type), 2); // 123D+231
+
         }
-        
+
 
         public string FromInput(string value, SystemType type, WordType w_len)
         {
@@ -65,7 +63,7 @@ namespace wo_calculator.Logic.Converters
             if (newType == SystemType.Bin)
                 return binaryValue.TrimStart(new char[] { '0' });
 
-            var converted = Convert.ToInt32(binaryValue, 2);
+            var converted = Convert.ToInt64(binaryValue, 2);
 
             switch (newType)
             {
