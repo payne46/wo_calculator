@@ -38,9 +38,9 @@ namespace wo_calculator.Tests
         {
             var calculator = new Calculator();
 
-            calculator.InputValue = "0s93g2s45-cl";
+            calculator.InputValue = "-0s93g2s45-cl";
 
-            Assert.AreEqual("93245", calculator.InputValue);
+            Assert.AreEqual("-93245", calculator.InputValue);
         }
     }
 }

@@ -8,7 +8,25 @@ namespace wo_calculator.Tests
     public class TrimTest
     {
         [TestMethod]
-        public void SystemTypeChangeTest()
+        public void PasteTrimTest()
+        {
+            var calculator = new Calculator();
+
+            calculator.SystemType = SystemType.Dec;
+            calculator.WordType = WordType.BYTE;
+
+            calculator.InputValue = "291";
+
+            Assert.AreEqual("35", calculator.InputValue);
+
+
+            calculator.InputValue = "300";
+
+            Assert.AreEqual("44", calculator.InputValue);
+        }
+
+        [TestMethod]
+        public void TrimTestBinary()
         {
             var calculator = new Calculator()
             {
@@ -28,7 +46,7 @@ namespace wo_calculator.Tests
         }
 
         [TestMethod]
-        public void SystemTypeChangeTestDec()
+        public void TrimTestDec()
         {
             var calculator = new Calculator()
             {

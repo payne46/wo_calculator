@@ -28,7 +28,9 @@ namespace wo_calculator.Logic
             get { return this.inputValue; }
             set
             {
-                this.inputValue = this.ValueConverter.FromInput(value, this.SystemType, this.WordType);
+                this.inputValue = this.ValueConverter.ConvertValue(value, this.SystemType, this.SystemType, this.WordType);
+
+                //this.inputValue = this.ValueConverter.FromInput(value, this.SystemType, this.WordType);
             }
         }
         
@@ -42,7 +44,7 @@ namespace wo_calculator.Logic
             get { return this.systemType; }
             set
             {
-                this.inputValue = this.ValueConverter.FromChange(this.inputValue, this.SystemType, value, this.WordType);
+                this.inputValue = this.ValueConverter.ConvertValue(this.inputValue, this.SystemType, value, this.WordType);
                 this.systemType = value;
             }
         }
@@ -52,7 +54,7 @@ namespace wo_calculator.Logic
             get { return this.wordType; }
             set
             {
-                this.inputValue = this.ValueConverter.FromChange(this.inputValue, this.SystemType, this.SystemType, value);
+                this.inputValue = this.ValueConverter.ConvertValue(this.inputValue, this.SystemType, this.SystemType, value);
                 this.wordType = value;
             }
         }

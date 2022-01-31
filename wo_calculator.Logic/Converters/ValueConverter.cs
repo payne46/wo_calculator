@@ -18,41 +18,8 @@ namespace wo_calculator.Logic.Converters
 
         }
 
-
-        public string FromInput(string value, SystemType type, WordType w_len)
+        public string ConvertValue(string value, SystemType oldType, SystemType newType, WordType w_len)
         {
-            var parsedValue = this.GetParsedValue(value, type);
-            
-            var binaryValue = type != SystemType.Bin
-                ? this.GetBinaryValue(parsedValue, type, w_len) 
-                : parsedValue;
-            
-            binaryValue = this.ChangeBinaryLength(binaryValue, w_len);
-
-            if (type == SystemType.Bin)
-                return binaryValue.TrimStart(new char[] { '0' });
-            
-            var converted = Convert.ToInt32(binaryValue, 2);
-
-            switch (type)
-            {
-                case SystemType.Oct:
-                    return Convert.ToString(converted, 8);
-
-                case SystemType.Dec:
-                    return converted.ToString();
-
-                case SystemType.Hex:
-                    return converted.ToString("X");
-            }
-
-            return binaryValue.TrimStart(new char[] { '0' });
-        }
-
-        public string FromChange(string value, SystemType oldType, SystemType newType, WordType w_len)
-        {
-            if (oldType == newType)
-                return this.FromInput(value, oldType, w_len);
 
             var parsedValueOld = this.GetParsedValue(value, oldType);
 
@@ -62,28 +29,27 @@ namespace wo_calculator.Logic.Converters
 
             if (newType == SystemType.Bin)
                 return binaryValue.TrimStart(new char[] { '0' });
+            string tmp = binaryValue[0] == '1' && binaryValue.Length == (int)w_len ?
+                new string('1', 64 - binaryValue.Length) + binaryValue : binaryValue;
+            var converted = Convert.ToInt64(tmp, 2);
 
-            var converted = Convert.ToInt64(binaryValue, 2);
-
-            switch (newType)
+            switch (w_len)
             {
-                case SystemType.Oct:
-                    return Convert.ToString(converted, 8);
+                case WordType.BYTE:
+                    return Convert.ToString(Convert.ToSByte(converted), (int)newType).ToUpper();
+                case WordType.WORD:
+                    return Convert.ToString(Convert.ToInt16(converted), (int)newType).ToUpper();
 
-                case SystemType.Dec:
-                    return converted.ToString();
-
-                case SystemType.Hex:
-                    return converted.ToString("X");
+                case WordType.DWORD:
+                    return Convert.ToString(Convert.ToInt32(converted), (int)newType).ToUpper();
             }
+            return Convert.ToString(converted, (int)newType).ToUpper();
 
-            return binaryValue.TrimStart(new char[] { '0' });
         }
 
         public string ChangeBinaryLength(string binaryValue, WordType w_len)
         {
             var targetLength = (int)w_len;
-
             if (binaryValue.Length > targetLength)
             {
                 return binaryValue.Substring(binaryValue.Length - targetLength);
@@ -103,7 +69,7 @@ namespace wo_calculator.Logic.Converters
             if (type == SystemType.Hex)
                 return this.ParseValue(value, AssignableValues.HexValues);
 
-            return this.ParseValue(value, AssignableValues.DecValues);
+            return this.ParseValue(value, AssignableValues.DecValues, type);
         }
         
         public string Get64BinaryValue(string value)
@@ -114,10 +80,11 @@ namespace wo_calculator.Logic.Converters
 
         }
 
-        public string ParseValue(string value, char[] availableChars)
+        public string ParseValue(string value, char[] availableChars, SystemType type = SystemType.Bin)
         {
             var sb = new StringBuilder();
-
+            if (value[0] == '-' && SystemType.Dec == type)
+                sb.Append('-');
             foreach (var v in value)
             {
                 if (availableChars.Contains(v))
